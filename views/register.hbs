@@ -1,8 +1,9 @@
 <div class="wrapper d-flex align-items-center justify-content-center my-5">
   <form class="form-signin" action="/users/register" method="POST" style="width: 50%;">
     <div class="text-center mb-4">
-      <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Register</h1>
     </div>
+    {{> message}}
     <div class="form-label-group">
       <label for="inputName">Name</label>
       <input type="text" name="name" class="form-control" placeholder="Name" required autofocus>
