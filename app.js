@@ -6,6 +6,7 @@ const routes = require('./routes')
 const db = require('./models')
 const flash = require('connect-flash')
 const session = require('express-session')
+const usePassport = require('./config/passport')
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
   next()
 })
 
+usePassport(app)
 app.use(routes)
 app.listen(port, () => {
   console.log('App is listening on http://localhost:3000')

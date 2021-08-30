@@ -19,7 +19,6 @@ const userController = {
         req.flash('error_messages', '信箱重複！')
         return res.redirect('/users/register')
       }
-
       await User.create({
         name: req.body.name.trim(),
         email: req.body.email.trim(),
@@ -27,10 +26,25 @@ const userController = {
       })
 
       req.flash('success_messages', '成功註冊帳號！')
-      return res.redirect('users/signin')
+      return res.redirect('/users/signin')
     } catch (error) {
       console.error(error)
     }
+  },
+
+  signInPage: (req, res) => {
+    return res.render('signin')
+  },
+
+  signIn: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/mountains')
+  },
+
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/users/signin')
   },
 }
 
