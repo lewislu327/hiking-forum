@@ -1,6 +1,6 @@
 <h3>論壇後台</h3>
 
-<a href='/admin/mountain/create'>
+<a href='/admin/mountains/create'>
   <button type="button" class="btn btn-primary">New Mountain</button>
 </a>
 
@@ -23,16 +23,16 @@
         <td>{{this.name}}</td>
         <td>
           <button type="button" class="btn btn-link">
-            <a href="/admin/restaurants/{{this.id}}">
+            <a href="/admin/mountains/{{this.id}}">
               Show
             </a>
           </button>
           <button type="button" class="btn btn-link">
-            <a href="/admin/restaurants/{{this.id}}/edit">
+            <a href="/admin/mountains/{{this.id}}/edit">
               Edit
             </a>
           </button>
-          <form action="/admin/restaurants/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+          <form action="/admin/mountains/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
             <button type="submit" class="btn btn-link">Delete</button>
           </form>
         </td>
