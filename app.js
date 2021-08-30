@@ -13,14 +13,14 @@ app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
-
+usePassport(app)
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = req.user
   next()
 })
 
-usePassport(app)
 app.use(routes)
 app.listen(port, () => {
   console.log('App is listening on http://localhost:3000')

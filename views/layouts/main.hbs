@@ -14,7 +14,20 @@
 </head>
 <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">健行者論壇</a>
+    <div class="leftContainer">
+      <a class="navbar-brand" href="/">健行者論壇</a>
+    </div>
+    <div class="rightContainer">
+      {{#if user.isAdmin}}
+        <a href="/admin" style="color: black;margin-right: 12px;">Admin 後台</a>
+      {{/if}}
+      {{#if user}}
+        <span style="color: black;margin-right: 12px;">Hi, {{user.email}}</span>
+        <a href="/users/{{user.id}}" style="color: black;margin-right: 12px;">Profile</a>
+        <a href="/users/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
+      {{/if}}
+
+    </div>
   </div>
 </nav>
 <body>
