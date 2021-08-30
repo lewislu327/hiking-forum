@@ -3,6 +3,7 @@ const app = express()
 const port = 3000
 const handlebars = require('express-handlebars')
 const routes = require('./routes')
+const db = require('./models')
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
