@@ -11,5 +11,7 @@ router.get('/mountains/:id', adminController.getMountain)
 router.get('/mountains/:id/edit', adminController.editMountain)
 router.post('/mountains', upload.single('image'), adminController.postMountain)
 router.get('/mountains', adminController.getMountains)
+router.get('/users', adminController.getUsers)
+router.put('/users/:id/toggleAdmin', adminController.toggleAdmin)
 
 module.exports = router
