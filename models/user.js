@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasMany(models.Comment)
+      User.belongsToMany(models.Mountain, {
+        through: models.Favorite,
+        foreignKey: 'UserId',
+        as: 'FavoritedMountains',
+      })
     }
   }
   User.init(

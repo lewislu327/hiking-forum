@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Favorite } = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -81,6 +81,25 @@ const userController = {
       req.flash('success_messages', '已成功更新此筆紀錄')
       return res.redirect(`/users/${user.id}`)
     }
+  },
+
+  addFavorite: async (req, res) => {
+    await Favorite.create({
+      UserId: req.user.id,
+      MountainId: req.params.mountainId,
+    })
+    return res.redirect('back')
+  },
+
+  removeFavorite: async (req, res) => {
+    const favorite = await Favorite.findOne({
+      where: {
+        UserId: req.user.id,
+        MountainId: req.params.mountainId,
+      },
+    })
+    await favorite.destroy()
+    return res.redirect('back')
   },
 }
 

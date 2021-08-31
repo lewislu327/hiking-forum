@@ -29,6 +29,7 @@ const mountainController = {
       ...d.dataValues,
       description: d.dataValues.description.substring(0, 50),
       altitudeName: d.Altitude.name,
+      isFavorited: req.user.FavoritedMountains.map((d) => d.id).includes(d.id),
     }))
 
     const page = Number(req.query.page) || 1
@@ -51,9 +52,15 @@ const mountainController = {
 
   getMountain: async (req, res) => {
     const mountain = await Mountain.findByPk(req.params.id, {
-      include: [{ model: Altitude }, { model: Comment, include: [User] }],
+      include: [
+        { model: Altitude },
+        { model: Comment, include: [User] },
+        { model: User, as: 'FavoritedUsers' },
+      ],
     })
-    return res.render('mountain', { mountain: mountain.toJSON() })
+    console.log(mountain.FavoritedUsers)
+    const isFavorited = await mountain.FavoritedUsers.map((d) => d.id).includes(req.user.id)
+    return res.render('mountain', { mountain: mountain.toJSON(), isFavorited })
   },
 
   getFeeds: async (req, res) => {

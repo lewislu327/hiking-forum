@@ -14,6 +14,8 @@ router.post(
   userController.signIn
 )
 router.get('/logout', userController.logout)
+router.post('/favorite/:mountainId', userController.addFavorite)
+router.delete('/favorite/:mountainId', userController.removeFavorite)
 router.get('/:id/edit', userController.editUser)
 router.put('/:id', upload.single('image'), userController.putUser)
 router.get('/:id', userController.getUser)

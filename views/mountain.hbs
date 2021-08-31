@@ -12,6 +12,14 @@
         <li><strong>難易度:</strong> {{mountain.difficulty}}</li>
         <li><strong>地點:</strong> {{mountain.address}}</li>
       </ul>
+      {{#if this.isFavorited }}
+        <form action="/users/favorite/{{mountain.id}}?_method=DELETE" method="POST"><button type="submit"
+            class="btn btn-danger float-start">移除最愛</button></form>
+      {{else}}
+        <form action="/users/favorite/{{mountain.id}}" method="POST"><button type="submit"
+            class="btn btn-primary float-start">加到最愛</button>
+        </form>
+      {{/if}}
     </div>
   </div>
   <hr>
@@ -45,7 +53,7 @@
     </blockquote>
     <hr />
   {{/each}}
-
+  
 
   <a href="javascript:history.back()">回上一頁</a>
 </div>
