@@ -1,0 +1,24 @@
+<div class="wrapper m-auto my-5" style="width: 60%;">
+ <div class="row user-info">
+    {{> message}}
+   <div class="col-4">
+    <img src="{{user.image}}" alt="" style="width: 250px;">
+   </div>
+   <div class="col-8">
+    <h2>{{user.name}}</h2>
+    <p>{{user.email}}</p>
+    <p><strong>{{Comments.length}}</strong>已評論地點</p>
+    <p><strong>{{FavoritedMountains.length}}</strong>收藏的地點</p>
+    <p><strong>{{Followings.length}}</strong>followings</p>
+    <p><strong>{{Followers.length}}</strong>followers</p>
+    {{#ifCond user.id myId}}
+      <button type="button" class="btn btn-outline-secondary">
+        <a href="/users/{{user.id}}/edit">
+          Edit
+        </a>
+      </button>
+    {{/ifCond}}
+   </div>
+   
+ </div> 
+</div>

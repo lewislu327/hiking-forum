@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { User } = require('../models')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
   registerPage: (req, res) => {
@@ -45,6 +47,40 @@ const userController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/users/signin')
+  },
+
+  getUser: async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    const myId = req.user.id
+    return res.render('user', { user: user.toJSON(), myId })
+  },
+
+  editUser: (req, res) => {
+    return res.render('edit')
+  },
+
+  putUser: async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    if (!req.body.name) {
+      req.flash('error_messages', "name didn't exist")
+      return res.redirect('back')
+    }
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, async (err, img) => {
+        await user.update({
+          name: req.body.name,
+          image: file ? img.data.link : null,
+        })
+      })
+      req.flash('success_messages', '已成功更新此筆紀錄')
+      return res.redirect(`/users/${user.id}`)
+    } else {
+      user.update({ name: req.body.name })
+      req.flash('success_messages', '已成功更新此筆紀錄')
+      return res.redirect(`/users/${user.id}`)
+    }
   },
 }
 
