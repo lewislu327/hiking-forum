@@ -10,6 +10,11 @@ const mountainController = {
     }))
     return res.render('mountains', { mountains })
   },
+
+  getMountain: async (req, res) => {
+    const mountain = await Mountain.findByPk(req.params.id, { include: Altitude })
+    return res.render('mountain', { mountain: mountain.toJSON() })
+  },
 }
 
 module.exports = mountainController
