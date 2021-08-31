@@ -1,9 +1,26 @@
-const { Mountain } = require('../models')
+const { Mountain, User } = require('../models')
 const fs = require('fs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const adminController = {
+  getUsers: async (req, res) => {
+    const users = await User.findAll({ raw: true })
+    return res.render('admin/mountains', { users })
+  },
+
+  toggleAdmin: async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    if (user.isAdmin) {
+      await user.update({ isAdmin: false })
+      req.flash('success_messages', 'success: admin change to user')
+      return res.redirect('/admin/users')
+    } else {
+      await user.update({ isAdmin: true })
+      req.flash('success_messages', 'success: user change to admin')
+      return res.redirect('/admin/users')
+    }
+  },
   getMountains: async (req, res) => {
     try {
       const mountains = await Mountain.findAll({ raw: true })

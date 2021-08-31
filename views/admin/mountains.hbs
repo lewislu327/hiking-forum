@@ -1,14 +1,19 @@
 <h3>論壇後台</h3>
 
+<div class="container">
 <a href='/admin/mountains/create'>
   <button type="button" class="btn btn-primary">New Mountain</button>
 </a>
+<a href="/admin/users">Users</a>
+</div>
+
 
 <br />
 <br />
 {{> message}}
 <div class="wrapper" style="width: 50%;">
 <table class="table table-striped">
+  {{#if mountains}}
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
@@ -38,6 +43,46 @@
         </td>
       </tr>
     {{/each}}
+    {{/if}}
+    {{#if users}}
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+          <tr>
+            <th scope="row">{{this.id}}</th>
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>
+              {{#if this.isAdmin}}
+                Admin
+              {{else}}
+                User
+              {{/if}}
+            </td>
+            <td>
+              <button type="button" class="btn btn-link">
+                <form action="/admin/users/{{this.id}}/toggleAdmin?_method=PUT" method="POST">
+                  <button type="submit" class="btn btn-link">
+                    {{#if this.isAdmin}}
+                      Set as user
+                    {{else}}
+                      Set as admin
+                    {{/if}}
+                  </button>
+                </form>
+              </button>
+            </td>
+          </tr>
+        {{/each}}
+    {{/if}}
   </tbody>
 </table>
 </div>
