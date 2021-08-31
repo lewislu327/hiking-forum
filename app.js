@@ -12,7 +12,14 @@ const session = require('express-session')
 const usePassport = require('./config/passport')
 const methodOverride = require('method-override')
 
-app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine(
+  'hbs',
+  handlebars({
+    defaultLayout: 'main',
+    extname: '.hbs',
+    helpers: require('./config/handlebars-helpers'),
+  })
+)
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))

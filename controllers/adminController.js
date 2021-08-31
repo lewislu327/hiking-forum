@@ -33,8 +33,10 @@ const adminController = {
     }
   },
 
-  createMountain: (req, res) => {
-    return res.render('admin/create')
+  createMountain: async (req, res) => {
+    const altitudes = await Altitude.findAll({ raw: true, nest: true })
+    console.log(altitudes)
+    return res.render('admin/create', { altitudes })
   },
 
   postMountain: async (req, res) => {
@@ -54,6 +56,7 @@ const adminController = {
             height: req.body.height,
             description: req.body.description,
             image: file ? img.data.link : null,
+            AltitudeId: req.body.altitudeId,
           })
         })
       } else {
@@ -64,6 +67,7 @@ const adminController = {
           height: req.body.height,
           description: req.body.description,
           image: null,
+          AltitudeId: req.body.altitudeId,
         })
       }
 
@@ -83,8 +87,9 @@ const adminController = {
   },
 
   editMountain: async (req, res) => {
-    const mountain = await Mountain.findByPk(req.params.id, { raw: true })
-    return res.render('admin/create', { mountain })
+    const mountain = await Mountain.findByPk(req.params.id)
+    const altitudes = await Altitude.findAll({ raw: true, nest: true })
+    return res.render('admin/create', { mountain: mountain.toJSON(), altitudes })
   },
 
   putMountain: async (req, res) => {
@@ -104,6 +109,7 @@ const adminController = {
           height: req.body.height,
           description: req.body.description,
           image: file ? img.data.link : mountain.image,
+          AltitudeId: req.body.altitudeId,
         })
       })
     } else {
@@ -115,6 +121,7 @@ const adminController = {
         height: req.body.height,
         description: req.body.description,
         image: mountain.image,
+        AltitudeId: req.body.altitudeId,
       })
     }
 
