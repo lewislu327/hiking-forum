@@ -1,5 +1,7 @@
 const { Mountain } = require('../models')
 const fs = require('fs')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const adminController = {
   getMountains: async (req, res) => {
@@ -23,17 +25,15 @@ const adminController = {
       }
       const { file } = req
       if (file) {
-        fs.readFile(file.path, (err, data) => {
-          if (err) console.log('Error: ', err)
-          fs.writeFile(`upload/${file.originalname}`, data, async () => {
-            await Mountain.create({
-              name: req.body.name,
-              difficulty: req.body.difficulty,
-              address: req.body.address,
-              height: req.body.height,
-              description: req.body.description,
-              image: file ? `/upload/${file.originalname}` : null,
-            })
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        imgur.upload(file.path, async (err, img) => {
+          await Mountain.create({
+            name: req.body.name,
+            difficulty: req.body.difficulty,
+            address: req.body.address,
+            height: req.body.height,
+            description: req.body.description,
+            image: file ? img.data.link : null,
           })
         })
       } else {
@@ -71,18 +71,16 @@ const adminController = {
     }
     const { file } = req
     if (file) {
-      fs.readFile(file.path, (err, data) => {
-        if (err) console.log('Error: ', err)
-        fs.writeFile(`upload/${file.originalname}`, data, async () => {
-          const mountain = await Mountain.findByPk(req.params.id)
-          await mountain.update({
-            name: req.body.name,
-            difficulty: req.body.difficulty,
-            address: req.body.address,
-            height: req.body.height,
-            description: req.body.description,
-            image: file ? `/upload/${file.originalname}` : mountain.image,
-          })
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, async (err, img) => {
+        const mountain = await Mountain.findByPk(req.params.id)
+        await mountain.update({
+          name: req.body.name,
+          difficulty: req.body.difficulty,
+          address: req.body.address,
+          height: req.body.height,
+          description: req.body.description,
+          image: file ? img.data.link : mountain.image,
         })
       })
     } else {
