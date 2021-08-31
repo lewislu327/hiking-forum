@@ -13,6 +13,7 @@ app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+app.use('/upload', express.static(__dirname + '/upload'))
 app.use(flash())
 usePassport(app)
 app.use((req, res, next) => {
