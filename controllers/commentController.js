@@ -9,6 +9,12 @@ const commentController = {
     })
     return res.redirect(`/mountains/${req.body.mountainId}`)
   },
+
+  deleteComment: async (req, res) => {
+    const comment = await Comment.findByPk(req.params.id)
+    await comment.destroy()
+    return res.redirect(`/mountains/${comment.MountainId}`)
+  },
 }
 
 module.exports = commentController
