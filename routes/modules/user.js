@@ -13,6 +13,7 @@ router.post(
   passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }),
   userController.signIn
 )
+router.get('/top', userController.getTopUser)
 router.get('/logout', userController.logout)
 router.post('/favorite/:mountainId', userController.addFavorite)
 router.delete('/favorite/:mountainId', userController.removeFavorite)
