@@ -1,6 +1,7 @@
-<div class="row">
+<div class="row m-auto" style="width: 80%;">
   <div class="col-md-12">
     <h1>{{mountain.name}}</h1>
+    <p>[{{mountain.Altitude.name}}]</p>
   </div>
 <img class="img-responsive center-block" src="{{mountain.image}}" style="width: 250px;margin-bottom: 25px;">
   <div class="col-md-4">
@@ -13,14 +14,15 @@
       </ul>
     </div>
   </div>
+  <hr>
   <div class="col-md-8">
     <p>{{mountain.description}}</p>
   </div>
   <hr>
+  <br />
+  <br />
+  <a href="javascript:history.back()">回上一頁</a>
 </div>
 
-<hr>
 
-<br />
-<br />
-<a href="javascript:history.back()">回上一頁</a>
+

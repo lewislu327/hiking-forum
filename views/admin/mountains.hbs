@@ -11,13 +11,14 @@
 <br />
 <br />
 {{> message}}
-<div class="wrapper" style="width: 50%;">
+<div class="wrapper m-auto" style="width: 80%;">
 <table class="table table-striped">
   {{#if mountains}}
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
+      <th scope="col">Altitude</th>
       <th scope="col">#</th>
     </tr>
   </thead>
@@ -26,6 +27,7 @@
       <tr>
         <th scope="row">{{this.id}}</th>
         <td>{{this.name}}</td>
+        <td>{{this.Altitude.name}}</td>
         <td>
           <button type="button" class="btn btn-link">
             <a href="/admin/mountains/{{this.id}}">

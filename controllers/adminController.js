@@ -1,5 +1,4 @@
-const { Mountain, User } = require('../models')
-const fs = require('fs')
+const { Mountain, User, Altitude } = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -23,7 +22,11 @@ const adminController = {
   },
   getMountains: async (req, res) => {
     try {
-      const mountains = await Mountain.findAll({ raw: true })
+      const mountains = await Mountain.findAll({
+        raw: true,
+        nest: true,
+        include: [Altitude],
+      })
       return res.render('admin/mountains', { mountains })
     } catch (error) {
       console.error(error)
@@ -72,8 +75,11 @@ const adminController = {
   },
 
   getMountain: async (req, res) => {
-    const mountain = await Mountain.findByPk(req.params.id, { raw: true })
-    return res.render('admin/mountain', { mountain })
+    const mountain = await Mountain.findByPk(req.params.id, {
+      include: [Altitude],
+    })
+    console.log(mountain)
+    return res.render('admin/mountain', { mountain: mountain.toJSON() })
   },
 
   editMountain: async (req, res) => {
