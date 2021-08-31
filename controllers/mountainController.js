@@ -1,4 +1,4 @@
-const { Mountain, Altitude } = require('../models')
+const { Mountain, Altitude, Comment, User } = require('../models')
 const pageLimit = 10
 
 const mountainController = {
@@ -50,7 +50,9 @@ const mountainController = {
   },
 
   getMountain: async (req, res) => {
-    const mountain = await Mountain.findByPk(req.params.id, { include: Altitude })
+    const mountain = await Mountain.findByPk(req.params.id, {
+      include: [{ model: Altitude }, { model: Comment, include: [User] }],
+    })
     return res.render('mountain', { mountain: mountain.toJSON() })
   },
 }
