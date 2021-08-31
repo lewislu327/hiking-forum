@@ -1,11 +1,11 @@
 <div class="wrapper m-auto" style="width: 90%;">
   <ul class="nav nav-pills">
     <li class="nav-item">
-      <a class="nav-link {{#ifCond '' altitudeId}}active{{/ifCond}}" href="?categoryId=">全部</a>
+      <a class="nav-link {{#ifCond '' altitudeId}}active{{/ifCond}}" href="?altitudeId=">全部</a>
     </li>
     {{#each altitudes}}
       <li class="nav-item">
-        <a class="nav-link {{#ifCond this.id ../altitudeId}}active{{/ifCond}}" href="?categoryId={{this.id}}">{{this.name}}</a>
+        <a class="nav-link {{#ifCond this.id ../altitudeId}}active{{/ifCond}}" href="?altitudeId={{this.id}}">{{this.name}}</a>
       </li>
     {{/each}}
   </ul>
@@ -30,4 +30,26 @@
   </div>
   <br />
   <br />
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="/restaurants?page={{prev}}&categoryId={{altitudeId}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {{#each totalPage}}
+        {{#ifCond this ../page}}
+          <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
+      {{else}}
+        <li class="page-item"><a class="page-link"
+            href="/mountains?page={{this}}&altitudeId={{../altitudeId}}">{{this}}</a></li>
+        {{/ifCond}}
+      {{/each}}
+      <li class="page-item"><a class="page-link" href="/mountains?page={{next}}&altitudeId={{altitudeId}}"
+          aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>
