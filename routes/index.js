@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const homeRoute = require('./modules/home')
+const mountainRoute = require('./modules/mountain')
 const adminRoute = require('./modules/admin')
 const userRoute = require('./modules/user')
 const authenticated = (req, res, next) => {
@@ -21,6 +21,6 @@ const authenticatedAdmin = (req, res, next) => {
 
 router.use('/admin', authenticatedAdmin, adminRoute)
 router.use('/users', userRoute)
-router.use('/', authenticated, homeRoute)
+router.use('/', authenticated, mountainRoute)
 
 module.exports = router
