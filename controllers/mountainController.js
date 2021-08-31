@@ -83,6 +83,24 @@ const mountainController = {
       comments: comments,
     })
   },
+
+  getTopMountains: async (req, res, next) => {
+    const altitudes = await Altitude.findAll({ raw: true, nest: true })
+    let mountains = await Mountain.findAll({
+      include: [{ model: User, as: 'FavoritedUsers' }, { model: Altitude }],
+    })
+
+    mountains = mountains.map((d) => ({
+      ...d.dataValues,
+      altitudeName: d.Altitude.name,
+      description: d.description.substring(0, 50),
+      favoritedCount: d.FavoritedUsers.length,
+      isFavorited: d.FavoritedUsers.map((d) => d.id).includes(req.user.id),
+    }))
+    mountains = mountains.sort((a, b) => b.favoritedCount - a.favoritedCount)
+    mountains = mountains.slice(0, 10)
+    return res.render('topMountains', { mountains })
+  },
 }
 
 module.exports = mountainController
