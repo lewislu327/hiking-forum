@@ -55,6 +55,27 @@ const mountainController = {
     })
     return res.render('mountain', { mountain: mountain.toJSON() })
   },
+
+  getFeeds: async (req, res) => {
+    const mountains = await Mountain.findAll({
+      limit: 10,
+      raw: true,
+      nest: true,
+      order: [['createdAt', 'DESC']],
+      include: [Altitude],
+    })
+    const comments = await Comment.findAll({
+      limit: 10,
+      raw: true,
+      nest: true,
+      order: [['createdAt', 'DESC']],
+      include: [User, Mountain],
+    })
+    return res.render('feeds', {
+      mountains,
+      comments: comments,
+    })
+  },
 }
 
 module.exports = mountainController
