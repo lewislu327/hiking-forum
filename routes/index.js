@@ -3,6 +3,8 @@ const router = express.Router()
 const mountainRoute = require('./modules/mountain')
 const adminRoute = require('./modules/admin')
 const userRoute = require('./modules/user')
+const commentRoute = require('./modules/comment')
+
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next()
@@ -20,6 +22,7 @@ const authenticatedAdmin = (req, res, next) => {
 }
 
 router.use('/admin', authenticatedAdmin, adminRoute)
+router.use('/comments', commentRoute)
 router.use('/users', userRoute)
 router.use('/', authenticated, mountainRoute)
 

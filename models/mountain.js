@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Mountain.belongsTo(models.Altitude)
+      Mountain.hasMany(models.Comment)
     }
   }
   Mountain.init(
