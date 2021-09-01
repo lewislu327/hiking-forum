@@ -1,4 +1,4 @@
-# Restaurant forum Web App
+# Hiking forum Web App
 
 #### A simple web application build from Node.js & Express
 
