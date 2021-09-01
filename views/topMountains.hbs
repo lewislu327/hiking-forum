@@ -16,34 +16,35 @@
   <br>
   <h5>Top10景點</h5>
   <hr />
-  <div class="row m-auto" style="width: 80%"">
+  <div class="row m-auto" style="width: 80%">
     {{#each mountains}}
     
-      <div class="col-3 align-items-right my-3">
-        <a href="/mountains/{{this.id}}">
-          <img class="float-end" src="{{this.image}}" width="140px" height="140px">
-        </a>
-      </div>
-      <div class="col-3 my-3">
-        <h3>{{this.name}}</h3>
-        <p>高度：{{this.height}}<br/>
-        海拔：{{this.altitudeName}}</p>
-        <div class="d-flex flex-row">
-          <div class="me-5"><span class="badge bg-secondary">收藏數：{{this.favoritedCount}}</span></div>
-          <div>
-            {{#if this.isFavorited }}
-              <form action="/users/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
-                  class="btn btn-danger float-start"><i class="far fa-thumbs-up fa-xs"></i></button></form>
-            {{else}}
-              <form action="/users/favorite/{{this.id}}" method="POST"><button type="submit"
-                  class="btn btn-primary float-start"><i class="fas fa-thumbs-up"></i></button>
-              </form>
-            {{/if}}
-          </div>
-        
-        </div>
-        
-     </div>
-    {{/each}}
+  <div class=" col-3 align-items-right my-3">
+    <a href="/mountains/{{this.id}}">
+      <img class="float-end" src="{{this.image}}" width="140px" height="140px">
+    </a>
   </div>
+  <div class="col-3 my-3">
+    <h3>{{this.name}}</h3>
+    <p>高度：{{this.height}}<br />
+      海拔：{{this.altitudeName}}</p>
+    <div class="d-flex flex-row">
+      <div class="me-5">
+        <span class="badge bg-secondary">收藏數：{{this.favoritedCount}}</span>
+      </div>
+      <div>
+        {{#if this.isFavorited }}
+          <form action="/users/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+              class="btn btn-danger float-start"><i class="far fa-thumbs-up fa-xs"></i></button></form>
+        {{else}}
+          <form action="/users/favorite/{{this.id}}" method="POST"><button type="submit"
+              class="btn btn-primary float-start"><i class="fas fa-thumbs-up"></i></button>
+          </form>
+        {{/if}}
+      </div>
+    </div>
+
+  </div>
+  {{/each}}
+</div>
 </div>

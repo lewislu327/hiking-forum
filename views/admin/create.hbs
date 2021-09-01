@@ -5,13 +5,14 @@
     <form action="/admin/mountains" method="POST" enctype="multipart/form-data">
   {{/if}}
   {{> message}}
-  <div class="form-group">
-    <label for="name">Name</label>
+  <br>
+  <div class="form-group mt-3">
+    <label for="name">地點名稱</label>
     <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{mountain.name}}">
   </div>
   <br>
   <div class="form-group">
-    <label for="categoryId">Category</label>
+    <label for="categoryId">類別</label>
     <select class="form-control" id="altitudeId" name="altitudeId">
       {{#each altitudes}}
         <option value="{{this.id}}"
@@ -24,9 +25,14 @@
   </div>
   <br>
   <div class="form-group">
-    <label for="difficulty">Difficulty</label>
-    <input type="text" class="form-control" name="difficulty" id="difficulty" placeholder="Enter difficulty"
-      value="{{mountain.difficulty}}">
+      <label for="categoryId">難度（1~5 數字越大越難)</label>
+      <select class="form-control" id="difficulty" name="difficulty">
+        <option value="1" {{#ifCond mountain.difficulty 1}} selected{{/ifCond}}>1</option>
+        <option value="2" {{#ifCond mountain.difficulty 2}} selected{{/ifCond}}>2</option>
+        <option value="3" {{#ifCond mountain.difficulty 3}} selected{{/ifCond}}>3</option>
+        <option value="4" {{#ifCond mountain.difficulty 4}} selected{{/ifCond}}>4</option>
+        <option value="5" {{#ifCond mountain.difficulty 5}} selected{{/ifCond}}>5</option>
+      </select>
   </div>
   <br>
   <div class="form-group">
@@ -36,13 +42,13 @@
   </div>
   <br>
   <div class="form-group">
-    <label for="height">Height</label>
+    <label for="height">高度 (單位：Ｍ)</label>
     <input type="text" class="form-control" name="height" id="height" placeholder="Enter height"
       value="{{mountain.height}}" />
   </div>
   <br>
   <div class="form-group">
-    <label for="description">Description</label>
+    <label for="description">景點介紹</label>
     <textarea class="form-control" id="description" name="description" rows="3">{{mountain.description}}</textarea>
   </div>
   <br>

@@ -1,24 +1,86 @@
 <div class="wrapper m-auto my-5" style="width: 60%;">
- <div class="row user-info">
+  <div class="row user-info">
     {{> message}}
-   <div class="col-4">
-    <img src="{{user.image}}" alt="" style="width: 250px;">
-   </div>
-   <div class="col-8">
-    <h2>{{user.name}}</h2>
-    <p>{{user.email}}</p>
-    <p><strong>{{Comments.length}}</strong>已評論地點</p>
-    <p><strong>{{FavoritedMountains.length}}</strong>收藏的地點</p>
-    <p><strong>{{Followings.length}}</strong>followings</p>
-    <p><strong>{{Followers.length}}</strong>followers</p>
-    {{#ifCond user.id myId}}
-      <button type="button" class="btn btn-outline-secondary">
-        <a href="/users/{{user.id}}/edit">
-          Edit
-        </a>
-      </button>
-    {{/ifCond}}
-   </div>
-   
- </div> 
+    <div class="col-6 justify-content-end">
+      <img src="{{user.image}}" class="rounded float-end" alt="" style="width: 250px;">
+    </div>
+    <div class="col-6">
+      <h3>使用者名稱：{{user.name}}</h3>
+      <p>信箱：{{user.email}}</p>
+      <p><strong>{{comments.length}}</strong>個已評論地點
+        <strong>{{FavoritedMountains.length}}</strong>個收藏的地點
+      </p>
+      <p><strong>{{Followings.length}}</strong>位正在追隨
+        <strong>{{Followers.length}}</strong>位追隨者
+      </p>
+      {{#ifCond user.id myId}}
+        <button type="button" class="btn btn-outline-secondary">
+          <a href="/users/{{user.id}}/edit">
+            Edit
+          </a>
+        </button>
+      {{/ifCond}}
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 mt-3">
+      <div class="card-header">
+        {{comments.length}}個已評論地點
+      </div>
+      <h4></h4>
+      <div class="row">
+        {{#each comments}}
+          <div class="card mx-3 my-2" style="width: 8rem;">
+            <a href="/mountains/{{this.Mountain.id}}"><img class="card-img-top" src="{{this.Mountain.image}}"
+                alt="Card image cap"></a>
+            <P>{{this.Mountain.name}}</P>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="col-md-6 mt-3">
+      <div class="card-header">
+        {{FavoritedMountains.length}}個收藏的地點
+      </div>
+      <div class="row">
+        {{#each FavoritedMountains}}
+          <div class="card mx-3 my-2" style="width: 8rem;">
+            <a href="/restaurants/{{this.id}}"><img class="card-img-top" src="{{this.image}}" alt="Card image cap"></a>
+            <P>{{this.name}}</P>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-6 mt-3">
+      <div class="card-header">
+        {{user.Followings.length}}位Followings
+      </div>
+      <div class="row">
+        {{#each Followings}}
+          </a>
+          <div class="card mx-3 my-2" style="width: 5rem;">
+            <a href="/users/{{this.id}}"><img class="card-img-top" src="{{this.image}}" alt="Card image cap"></a>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <div class="card-header">
+        {{user.Followers.length}}位Followers
+      </div>
+      <div class="row">
+        {{#each Followers}}
+          <div class="card mx-3 my-2" style="width: 5rem;">
+            <a href="/users/{{this.id}}"><img class="card-img-top" src="{{this.image}}" alt="Card image cap"></a>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 </div>

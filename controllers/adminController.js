@@ -42,10 +42,19 @@ const adminController = {
   postMountain: async (req, res) => {
     try {
       if (!req.body.name) {
-        req.flash('error_messages', "name didn't exist")
+        req.flash('error_messages', '未輸入景點名稱')
         return res.redirect('back')
       }
       const { file } = req
+      let height = req.body.height
+      let heightEnd = height[height.length - 1]
+      if (heightEnd === 'M') {
+        return
+      } else if (heightEnd === 'm') {
+        height = height.slice(0, height.length - 1) + 'M'
+      } else if (heightEnd !== 'M') {
+        height = height + 'M'
+      }
       if (file) {
         imgur.setClientID(IMGUR_CLIENT_ID)
         imgur.upload(file.path, async (err, img) => {
@@ -53,7 +62,7 @@ const adminController = {
             name: req.body.name,
             difficulty: req.body.difficulty,
             address: req.body.address,
-            height: req.body.height,
+            height: height,
             description: req.body.description,
             image: file ? img.data.link : null,
             AltitudeId: req.body.altitudeId,
@@ -64,7 +73,7 @@ const adminController = {
           name: req.body.name,
           difficulty: req.body.difficulty,
           address: req.body.address,
-          height: req.body.height,
+          height: height,
           description: req.body.description,
           image: null,
           AltitudeId: req.body.altitudeId,

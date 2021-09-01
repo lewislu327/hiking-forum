@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User, Favorite, Followship } = require('../models')
+const { User, Favorite, Followship, Comment, Mountain } = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -12,14 +12,14 @@ const userController = {
     try {
       if (req.body.passwordCheck !== req.body.password) {
         req.flash('error_messages', '兩次密碼輸入不同！')
-        return res.redirect('/users/register')
+        return res.redirect('/register')
       }
 
       const user = await User.findOne({ where: { email: req.body.email } })
 
       if (user) {
         req.flash('error_messages', '信箱重複！')
-        return res.redirect('/users/register')
+        return res.redirect('/register')
       }
       await User.create({
         name: req.body.name.trim(),
@@ -28,7 +28,7 @@ const userController = {
       })
 
       req.flash('success_messages', '成功註冊帳號！')
-      return res.redirect('/users/signin')
+      return res.redirect('/signin')
     } catch (error) {
       console.error(error)
     }
@@ -46,13 +46,27 @@ const userController = {
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
     req.logout()
-    res.redirect('/users/signin')
+    res.redirect('/signin')
   },
 
   getUser: async (req, res) => {
-    const user = await User.findByPk(req.params.id)
-    const myId = req.user.id
-    return res.render('user', { user: user.toJSON(), myId })
+    let user = await User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Mountain, as: 'FavoritedMountains' },
+        { model: Comment, include: [Mountain] },
+      ],
+    })
+
+    return res.render('user', {
+      user: user.toJSON(),
+      myId: req.user.id,
+      comments: user.Comments,
+      FavoritedMountains: user.FavoritedMountains,
+      Followers: user.Followers,
+      Followings: user.Followings,
+    })
   },
 
   editUser: (req, res) => {

@@ -18,6 +18,10 @@ app.engine(
     defaultLayout: 'main',
     extname: '.hbs',
     helpers: require('./config/handlebars-helpers'),
+    runtimeOptions: {
+      allowProtoPropertiesByDefault: true,
+      allowProtoMethodsByDefault: true,
+    },
   })
 )
 app.set('view engine', 'hbs')
