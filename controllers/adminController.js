@@ -35,7 +35,6 @@ const adminController = {
 
   createMountain: async (req, res) => {
     const altitudes = await Altitude.findAll({ raw: true, nest: true })
-    console.log(altitudes)
     return res.render('admin/create', { altitudes })
   },
 

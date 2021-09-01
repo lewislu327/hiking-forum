@@ -18,11 +18,11 @@
       <a class="navbar-brand" href="/mountains">健行者論壇</a>
     </div>
     <div class="rightContainer">
-      {{#if user.isAdmin}}
+      {{#if currentUser.isAdmin}}
         <a href="/admin/mountains" style="color: black;margin-right: 12px;">Admin 後台</a>
       {{/if}}
-      {{#if user}}
-        <span style="color: black;margin-right: 12px;">Hi, {{user.email}}</span>
+      {{#if currentUser}}
+        <span style="color: black;margin-right: 12px;">Hi, {{currentUser.email}}</span>
         <a href="/users/{{user.id}}" style="color: black;margin-right: 12px;">Profile</a>
         <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
       {{/if}}
