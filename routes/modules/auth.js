@@ -5,6 +5,7 @@ const passport = require('passport')
 
 router.get('/register', userController.registerPage)
 router.post('/register', userController.register)
+router.get('/', userController.signInPage)
 router.get('/signin', userController.signInPage)
 router.post(
   '/signin',
